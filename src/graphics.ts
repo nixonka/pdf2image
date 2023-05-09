@@ -7,21 +7,13 @@ import { ToBase64Response } from "./types/toBase64Response";
 
 export class Graphics {
   private quality = 0;
-
   private format = "png";
-
-  private width = 768;
-
-  private height = 512;
-
+  private width = null;
+  private height = null;
   private density = 72;
-
   private savePath = "./";
-
   private saveFilename = "untitled";
-
   private compression = "jpeg";
-
   private gm: gm.SubClass = gm.subClass({ imageMagick: false });
 
   public generateValidFilename(page?: number): string {
@@ -35,7 +27,7 @@ export class Graphics {
   public gmBaseCommand(stream: fs.ReadStream, filename: string): gm.State {
     return this.gm(stream, filename)
       .density(this.density, this.density)
-      .resize(this.width, this.height, "!")
+      .resize(this.width, this.height)
       .quality(this.quality)
       .compress(this.compression)
   }
